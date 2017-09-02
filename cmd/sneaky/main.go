@@ -14,10 +14,11 @@ func main() {
 		port = "8080"
 	}
 
+	cr := engine.NewCRHandler()
+	cr.RegisterCreator("WaitRoom", NewWaitRoom, 4)
+
 	logger := log.New(os.Stdout, "", log.LstdFlags)
 	hub := engine.NewHub(logger, ":"+port)
-
-	hub.RegisterRoom(&waitRoom{})
 
 	err := hub.Start(engine.ServerWS)
 	if err != nil {
